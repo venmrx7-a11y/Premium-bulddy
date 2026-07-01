@@ -162,25 +162,26 @@ def get_emoji_html(name):
     except:
         return ""
 
-def get_random_emoji():
+def get_emoji_display(name):
+    """Get emoji display with both premium emoji and name"""
     try:
-        names = list(PREMIUM_EMOJIS.keys())
-        if not names:
-            return ""
-        random_name = random.choice(names)
-        return get_emoji_html(random_name)
+        if name in PREMIUM_EMOJIS:
+            data = PREMIUM_EMOJIS[name]
+            # Return premium emoji with name
+            return f'<tg-emoji emoji-id="{data["id"]}">{data["fallback"]}</tg-emoji> {name}'
+        return f"❌ {name}"
     except:
-        return "✅"
+        return f"❌ {name}"
 
 def get_emoji_by_name(name):
     try:
         if name in PREMIUM_EMOJIS:
-            return get_emoji_html(name)
+            data = PREMIUM_EMOJIS[name]
+            return f'<tg-emoji emoji-id="{data["id"]}">{data["fallback"]}</tg-emoji>'
         return None
     except:
         return None
 
-# ============ SIMPLE TEXT FORMATTING ============
 def to_fancy(text):
     try:
         fancy_map = {
@@ -193,21 +194,6 @@ def to_fancy(text):
             '0': '𝟎', '1': '𝟏', '2': '𝟐', '3': '𝟑', '4': '𝟒', '5': '𝟓', '6': '𝟔', '7': '𝟕', '8': '𝟖', '9': '𝟗'
         }
         return ''.join(fancy_map.get(c, c) for c in text)
-    except:
-        return text
-
-def format_with_double_emojis(text):
-    try:
-        lines = text.split('\n')
-        formatted_lines = []
-        for line in lines:
-            if line.strip():
-                left_emoji = get_random_emoji()
-                right_emoji = get_random_emoji()
-                formatted_lines.append(f"{left_emoji} {line} {right_emoji}")
-            else:
-                formatted_lines.append(line)
-        return '\n'.join(formatted_lines)
     except:
         return text
 
@@ -301,7 +287,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 ━━━━━━━━━━━━━━━━━━
 👑 @iflexbluddy
 """
-        await update.message.reply_text(content, parse_mode=None)
+        await update.message.reply_text(content)
     except Exception as e:
         print(f"Error in start: {e}")
         await update.message.reply_text("❌ Error! Please try /start again.")
@@ -345,13 +331,17 @@ async def all_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name or "User")
         
-        # Simple emoji list without HTML to avoid errors
+        # Create emoji list with PREMIUM EMOJIS (not just names)
         emoji_list = []
         for name in PREMIUM_EMOJIS.keys():
-            emoji_list.append(f"✅ {name}")
+            emoji_display = get_emoji_display(name)
+            if emoji_display:
+                emoji_list.append(emoji_display)
+            else:
+                emoji_list.append(f"❌ {name}")
         
-        # Split into chunks
-        chunks = [emoji_list[i:i+30] for i in range(0, len(emoji_list), 30)]
+        # Split into chunks of 20
+        chunks = [emoji_list[i:i+20] for i in range(0, len(emoji_list), 20)]
         
         for idx, chunk in enumerate(chunks):
             content = f"""📋 PREMIUM EMOJIS 📋
@@ -365,7 +355,7 @@ async def all_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 ━━━━━━━━━━━━━━━━━━
 💡 /emojify (name) text
 """
-            await update.message.reply_text(content)
+            await update.message.reply_text(content, parse_mode="HTML")
     except Exception as e:
         print(f"Error in all: {e}")
         await update.message.reply_text("❌ Error loading emojis. Use /help for commands.")
@@ -393,15 +383,16 @@ async def emojify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Replace (emoji_name) with premium emoji
         def replace_emoji(match):
             emoji_name = match.group(1).lower().strip()
-            if emoji_name in PREMIUM_EMOJIS:
-                return f"✅{emoji_name}✅"  # Simple replacement
+            emoji = get_emoji_by_name(emoji_name)
+            if emoji:
+                return emoji
             return match.group(0)
         
         # Apply replacement
         result = re.sub(r'\(([^)]+)\)', replace_emoji, full_text)
         
         # Check if any emoji was applied
-        if "✅" not in result:
+        if "<tg-emoji" not in result:
             await update.message.reply_text(
                 "❌ No valid emoji found!\n\n"
                 "Use /all to see available emojis"
@@ -411,10 +402,7 @@ async def emojify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Make text fancy
         fancy_result = to_fancy(result)
         
-        # Add random emojis at start and end
-        final_text = f"✨ {fancy_result} ✨"
-        
-        await update.message.reply_text(final_text)
+        await update.message.reply_text(fancy_result, parse_mode="HTML")
     except Exception as e:
         print(f"Error in emojify: {e}")
         await update.message.reply_text("❌ Error! Please try again.")
@@ -461,7 +449,6 @@ async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("📭 No users found.")
             return
         
-        # Create user list
         user_list = []
         for uid, u in users.items():
             status = "🚫" if uid in banned else "✅"
@@ -469,7 +456,6 @@ async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
             name = u.get('name', 'User')
             user_list.append(f"{status} {uid} - @{username} ({name})")
         
-        # Split into chunks
         chunks = [user_list[i:i+20] for i in range(0, len(user_list), 20)]
         
         for idx, chunk in enumerate(chunks):
@@ -600,13 +586,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ============ MAIN ============
 def main():
     try:
-        # Start Flask server for Render
         threading.Thread(target=run_flask, daemon=True).start()
         
-        # Create application
         application = Application.builder().token(BOT_TOKEN).build()
         
-        # Add command handlers
         application.add_handler(CommandHandler("start", start_command))
         application.add_handler(CommandHandler("help", help_command))
         application.add_handler(CommandHandler("all", all_command))
@@ -622,11 +605,10 @@ def main():
         print("✨ PREMIUM EMOJI BOT STARTED ✨")
         print(f"👑 Owner ID: {OWNER_ID}")
         print(f"📦 Total Emojis: {len(PREMIUM_EMOJIS)}")
-        print("✅ Bot is ready!")
+        print("✅ Bot is ready with REAL PREMIUM EMOJIS!")
         print("👑 Developer: @iflexbluddy")
         print("=" * 50)
         
-        # Start polling
         application.run_polling(allowed_updates=Update.ALL_TYPES)
         
     except Exception as e:

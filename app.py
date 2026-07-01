@@ -21,14 +21,14 @@ def run_flask():
     flask_app.run(host='0.0.0.0', port=port)
 
 # ============ CONFIG ============
-BOT_TOKEN = "8903487173:AAE3huf5T77b7U4OVonum23sUKNFPfWPrLs"  # 🔴 REPLACE WITH YOUR ACTUAL BOT TOKEN
-OWNER_ID = 7977493987
-ADMIN_IDS = [OWNER_ID, 7977493987]
+BOT_TOKEN = "8903487173:AAE3huf5T77b7U4OVonum23sUKNFPfWPrLs"  # Your new token
+OWNER_ID = 7977493987  # Your owner ID
+ADMIN_IDS = [OWNER_ID]
 
 USERS_FILE = "users.json"
 BANNED_FILE = "banned.json"
 
-# ============ ALL PREMIUM EMOJIS (COMPLETE LIST) ============
+# ============ ALL PREMIUM EMOJIS ============
 PREMIUM_EMOJIS = {
     "verified": {"id": "6246537187614005254", "fallback": "✅"},
     "verify": {"id": "6246782404476803545", "fallback": "✅"},
@@ -164,12 +164,14 @@ PREMIUM_EMOJIS = {
 }
 
 def get_emoji_html(name):
+    """Get premium emoji HTML with fallback"""
     if name in PREMIUM_EMOJIS:
         data = PREMIUM_EMOJIS[name]
         return f'<tg-emoji emoji-id="{data["id"]}">{data["fallback"]}</tg-emoji>'
     return ""
 
 def get_random_emoji():
+    """Get random premium emoji"""
     names = list(PREMIUM_EMOJIS.keys())
     if not names:
         return ""
@@ -177,12 +179,14 @@ def get_random_emoji():
     return get_emoji_html(random_name)
 
 def get_emoji_by_name(name):
+    """Get emoji by name"""
     if name in PREMIUM_EMOJIS:
         return get_emoji_html(name)
     return None
 
 # ============ STYLISH TEXT ============
 def to_fancy(text):
+    """Convert text to bold fancy Unicode"""
     fancy_map = {
         'A': '𝐀', 'B': '𝐁', 'C': '𝐂', 'D': '𝐃', 'E': '𝐄', 'F': '𝐅', 'G': '𝐆', 'H': '𝐇', 'I': '𝐈',
         'J': '𝐉', 'K': '𝐊', 'L': '𝐋', 'M': '𝐌', 'N': '𝐍', 'O': '𝐎', 'P': '𝐏', 'Q': '𝐐', 'R': '𝐑',
@@ -195,6 +199,7 @@ def to_fancy(text):
     return ''.join(fancy_map.get(c, c) for c in text)
 
 def format_with_double_emojis(text):
+    """Add random emojis at start and end of each line"""
     lines = text.split('\n')
     formatted_lines = []
     for line in lines:
@@ -247,8 +252,8 @@ def register_user(user_id, username, first_name):
     if user_id_str not in users:
         users[user_id_str] = {
             "id": user_id,
-            "username": username,
-            "name": first_name,
+            "username": username or "NoUsername",
+            "name": first_name or "User",
             "joined": str(datetime.now())
         }
         save_users(users)
@@ -269,7 +274,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         user = update.effective_user
         user_id = user.id
-        first_name = user.first_name
+        first_name = user.first_name or "User"
         username = user.username or "NoUsername"
         
         if is_banned(user_id):
@@ -293,7 +298,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 ❓ /help - 𝐇𝐞𝐥𝐩 𝐦𝐞𝐧𝐮
 ━━━━━━━━━━━━━━━━━━
 💡 𝐄𝐗𝐀𝐌𝐏𝐋𝐄
-/emojify (verified) 𝐡𝐞𝐥𝐥𝐨 𝐰𝐨𝐫𝐥𝐝 (don)
+/emojify (verified) 𝐡𝐞𝐥𝐥𝐨 𝐰𝐨𝐫𝐥𝐝
 ━━━━━━━━━━━━━━━━━━
 👑 @iflexbluddy
 """
@@ -341,21 +346,37 @@ async def all_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
             return
         
-        register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name)
+        register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name or "User")
         
+        # Create emoji list with proper formatting
         emoji_list = []
-        for name, data in PREMIUM_EMOJIS.items():
+        for name in PREMIUM_EMOJIS.keys():
             emoji_html = get_emoji_html(name)
-            emoji_list.append(f"{emoji_html} {name}")
+            if emoji_html:
+                emoji_list.append(f"{emoji_html} `{name}`")
+            else:
+                emoji_list.append(f"❌ `{name}`")
         
-        chunks = [emoji_list[i:i+30] for i in range(0, len(emoji_list), 30)]
+        # Split into chunks of 25
+        chunks = [emoji_list[i:i+25] for i in range(0, len(emoji_list), 25)]
         
         for idx, chunk in enumerate(chunks):
-            content = f"𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐄𝐌𝐎𝐉𝐈𝐒 ({len(PREMIUM_EMOJIS)}) - 𝐏𝐚𝐠𝐞 {idx+1}/{len(chunks)}\n━━━━━━━━━━━━━━━━━━\n\n" + "\n".join(chunk) + "\n\n━━━━━━━━━━━━━━━━━━\n💡 /emojify (name) 𝐭𝐞𝐱𝐭"
+            content = f"""📋 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐄𝐌𝐎𝐉𝐈𝐒 📋
+━━━━━━━━━━━━━━━━━━
+📦 𝐓𝐨𝐭𝐚𝐥: {len(PREMIUM_EMOJIS)} 𝐞𝐦𝐨𝐣𝐢𝐬
+📄 𝐏𝐚𝐠𝐞 {idx+1}/{len(chunks)}
+━━━━━━━━━━━━━━━━━━
+
+{chr(10).join(chunk)}
+
+━━━━━━━━━━━━━━━━━━
+💡 /emojify (name) 𝐭𝐞𝐱𝐭
+"""
             formatted = format_with_double_emojis(content)
             await update.message.reply_text(formatted, parse_mode="HTML")
     except Exception as e:
         print(f"Error in all_command: {e}")
+        await update.message.reply_text("❌ Error loading emojis. Please try again.")
 
 async def emojify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
@@ -364,43 +385,64 @@ async def emojify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
             return
         
-        register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name)
+        register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name or "User")
         
         if not context.args:
             await update.message.reply_text(
-                "📝 𝐔𝐬𝐚𝐠𝐞: `/emojify (emoji_name) 𝐲𝐨𝐮𝐫 𝐭𝐞𝐱𝐭`\n\n"
-                "𝐄𝐱𝐚𝐦𝐩𝐥𝐞: `/emojify (verified) 𝐡𝐞𝐥𝐥𝐨 (don)`\n\n"
-                "𝐔𝐬𝐞 /all 𝐭𝐨 𝐬𝐞𝐞 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬",
+                "📝 **𝐔𝐬𝐚𝐠𝐞:** `/emojify (emoji_name) 𝐲𝐨𝐮𝐫 𝐭𝐞𝐱𝐭`\n\n"
+                "**𝐄𝐱𝐚𝐦𝐩𝐥𝐞:** `/emojify (verified) 𝐡𝐞𝐥𝐥𝐨`\n\n"
+                "**𝐔𝐬𝐞** /all **𝐭𝐨 𝐬𝐞𝐞 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬**",
                 parse_mode="Markdown"
             )
             return
         
+        # Get full text
         full_text = " ".join(context.args)
         
+        # Replace (emoji_name) with premium emoji
         def replace_emoji(match):
             emoji_name = match.group(1).lower().strip()
             emoji_html = get_emoji_by_name(emoji_name)
             if emoji_html:
                 return emoji_html
-            return match.group(0)
+            return match.group(0)  # Keep original if not found
         
+        # Apply replacement
         result = re.sub(r'\(([^)]+)\)', replace_emoji, full_text)
         
-        if not result.strip():
-            await update.message.reply_text("❌ 𝐍𝐨 𝐯𝐚𝐥𝐢𝐝 𝐞𝐦𝐨𝐣𝐢 𝐟𝐨𝐮𝐧𝐝! 𝐔𝐬𝐞 /all")
+        # Check if any emoji was applied
+        if not re.search(r'<tg-emoji', result):
+            await update.message.reply_text(
+                "❌ **𝐍𝐨 𝐯𝐚𝐥𝐢𝐝 𝐞𝐦𝐨𝐣𝐢 𝐟𝐨𝐮𝐧𝐝!**\n\n"
+                "𝐔𝐬𝐞 /all 𝐭𝐨 𝐬𝐞𝐞 𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐞𝐦𝐨𝐣𝐢𝐬",
+                parse_mode="Markdown"
+            )
             return
         
+        # Convert to fancy text
         stylish_result = to_fancy(result)
+        
+        # Add random emojis
         formatted = format_with_double_emojis(stylish_result)
+        
         await update.message.reply_text(formatted, parse_mode="HTML")
     except Exception as e:
         print(f"Error in emojify_command: {e}")
+        await update.message.reply_text("❌ An error occurred. Please try again later.")
 
 async def owner_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        if not is_owner(update.effective_user.id):
+        user_id = update.effective_user.id
+        if not is_owner(user_id):
             await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
             return
+        
+        # Get owner info
+        try:
+            owner = await context.bot.get_chat(OWNER_ID)
+            owner_name = owner.username or "iflexbluddy"
+        except:
+            owner_name = "iflexbluddy"
         
         total_users = len(users)
         banned_count = len(banned)
@@ -419,9 +461,8 @@ async def owner_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 🚫 /ban 𝐔𝐒𝐄𝐑_𝐈𝐃 - 𝐁𝐚𝐧 𝐮𝐬𝐞𝐫
 ✅ /unban 𝐔𝐒𝐄𝐑_𝐈𝐃 - 𝐔𝐧𝐛𝐚𝐧 𝐮𝐬𝐞𝐫
 📊 /stats - 𝐁𝐨𝐭 𝐬𝐭𝐚𝐭𝐬
-📋 /all - 𝐒𝐡𝐨𝐰 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
 ━━━━━━━━━━━━━━━━━━
-👑 @iflexbluddy
+👑 @{owner_name}
 """
         formatted = format_with_double_emojis(content)
         await update.message.reply_text(formatted, parse_mode="HTML")
@@ -430,7 +471,8 @@ async def owner_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        if not is_owner(update.effective_user.id):
+        user_id = update.effective_user.id
+        if not is_owner(user_id):
             await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
             return
         
@@ -438,71 +480,97 @@ async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("📭 𝐍𝐨 𝐮𝐬𝐞𝐫𝐬 𝐟𝐨𝐮𝐧𝐝.")
             return
         
-        msg = "👥 𝐔𝐒𝐄𝐑𝐒 𝐋𝐈𝐒𝐓 👥\n━━━━━━━━━━━━━━━━━━\n\n"
+        # Create user list with proper formatting
+        user_list = []
         for uid, u in users.items():
-            status = "🚫 𝐁𝐀𝐍𝐍𝐄𝐃" if uid in banned else "✅ 𝐀𝐂𝐓𝐈𝐕𝐄"
-            username = u.get('username', '𝐍𝐨𝐧𝐞')
-            msg += f"🆔 {uid}\n📛 @{username}\n📌 {status}\n\n"
+            status = "🚫" if uid in banned else "✅"
+            username = u.get('username', 'NoUsername')
+            name = u.get('name', 'User')
+            user_list.append(f"{status} `{uid}` - @{username} ({name})")
         
-        formatted = format_with_double_emojis(msg)
-        if len(formatted) > 4000:
-            await update.message.reply_text(f"📊 𝐓𝐨𝐭𝐚𝐥 𝐮𝐬𝐞𝐫𝐬: {len(users)}")
-        else:
-            await update.message.reply_text(formatted, parse_mode="HTML")
+        # Split into chunks
+        chunks = [user_list[i:i+20] for i in range(0, len(user_list), 20)]
+        
+        for idx, chunk in enumerate(chunks):
+            content = f"""👥 𝐔𝐒𝐄𝐑𝐒 𝐋𝐈𝐒𝐓 👥
+━━━━━━━━━━━━━━━━━━
+📊 𝐓𝐨𝐭𝐚𝐥: {len(users)} 𝐮𝐬𝐞𝐫𝐬
+📄 𝐏𝐚𝐠𝐞 {idx+1}/{len(chunks)}
+━━━━━━━━━━━━━━━━━━
+
+{chr(10).join(chunk)}
+
+━━━━━━━━━━━━━━━━━━
+✅ = 𝐀𝐜𝐭𝐢𝐯𝐞 | 🚫 = 𝐁𝐚𝐧𝐧𝐞𝐝
+"""
+            await update.message.reply_text(content, parse_mode="Markdown")
     except Exception as e:
         print(f"Error in list_users: {e}")
 
 async def ban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        if not is_owner(update.effective_user.id):
+        user_id = update.effective_user.id
+        if not is_owner(user_id):
             await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
             return
         
         if len(context.args) < 1:
-            await update.message.reply_text("📝 𝐔𝐬𝐚𝐠𝐞: `/ban 𝐔𝐒𝐄𝐑_𝐈𝐃`", parse_mode="Markdown")
+            await update.message.reply_text(
+                "📝 **𝐔𝐬𝐚𝐠𝐞:** `/ban 𝐔𝐒𝐄𝐑_𝐈𝐃`\n\n"
+                "𝐄𝐱𝐚𝐦𝐩𝐥𝐞: `/ban 123456789`",
+                parse_mode="Markdown"
+            )
             return
         
-        user_id = context.args[0]
-        if user_id not in users:
-            await update.message.reply_text(f"❌ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐧𝐨𝐭 𝐟𝐨𝐮𝐧𝐝!", parse_mode="Markdown")
+        user_id_to_ban = context.args[0]
+        
+        if user_id_to_ban not in users:
+            await update.message.reply_text(f"❌ 𝐔𝐬𝐞𝐫 `{user_id_to_ban}` 𝐧𝐨𝐭 𝐟𝐨𝐮𝐧𝐝!", parse_mode="Markdown")
             return
         
-        if user_id == str(OWNER_ID):
+        if user_id_to_ban == str(OWNER_ID):
             await update.message.reply_text("❌ 𝐂𝐚𝐧𝐧𝐨𝐭 𝐛𝐚𝐧 𝐭𝐡𝐞 𝐨𝐰𝐧𝐞𝐫!")
             return
         
-        if user_id not in banned:
-            banned.append(user_id)
+        if user_id_to_ban not in banned:
+            banned.append(user_id_to_ban)
             save_banned(banned)
-            await update.message.reply_text(f"✅ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
+            await update.message.reply_text(f"✅ 𝐔𝐬𝐞𝐫 `{user_id_to_ban}` 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
         else:
-            await update.message.reply_text(f"⚠️ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐢𝐬 𝐚𝐥𝐫𝐞𝐚𝐝𝐲 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
+            await update.message.reply_text(f"⚠️ 𝐔𝐬𝐞𝐫 `{user_id_to_ban}` 𝐢𝐬 𝐚𝐥𝐫𝐞𝐚𝐝𝐲 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
     except Exception as e:
         print(f"Error in ban_user: {e}")
 
 async def unban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        if not is_owner(update.effective_user.id):
+        user_id = update.effective_user.id
+        if not is_owner(user_id):
             await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
             return
         
         if len(context.args) < 1:
-            await update.message.reply_text("📝 𝐔𝐬𝐚𝐠𝐞: `/unban 𝐔𝐒𝐄𝐑_𝐈𝐃`", parse_mode="Markdown")
+            await update.message.reply_text(
+                "📝 **𝐔𝐬𝐚𝐠𝐞:** `/unban 𝐔𝐒𝐄𝐑_𝐈𝐃`\n\n"
+                "𝐄𝐱𝐚𝐦𝐩𝐥𝐞: `/unban 123456789`",
+                parse_mode="Markdown"
+            )
             return
         
-        user_id = context.args[0]
-        if user_id in banned:
-            banned.remove(user_id)
+        user_id_to_unban = context.args[0]
+        
+        if user_id_to_unban in banned:
+            banned.remove(user_id_to_unban)
             save_banned(banned)
-            await update.message.reply_text(f"✅ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐮𝐧𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
+            await update.message.reply_text(f"✅ 𝐔𝐬𝐞𝐫 `{user_id_to_unban}` 𝐮𝐧𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
         else:
-            await update.message.reply_text(f"⚠️ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐢𝐬 𝐧𝐨𝐭 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
+            await update.message.reply_text(f"⚠️ 𝐔𝐬𝐞𝐫 `{user_id_to_unban}` 𝐢𝐬 𝐧𝐨𝐭 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
     except Exception as e:
         print(f"Error in unban_user: {e}")
 
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        if not is_owner(update.effective_user.id):
+        user_id = update.effective_user.id
+        if not is_owner(user_id):
             await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
             return
         
@@ -534,15 +602,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if update.message.text and update.message.text.startswith('/'):
             return
         
-        register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name)
+        register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name or "User")
         
         content = f"""
 💡 𝐃𝐢𝐝 𝐲𝐨𝐮 𝐦𝐞𝐚𝐧 𝐭𝐨 𝐮𝐬𝐞 𝐚 𝐜𝐨𝐦𝐦𝐚𝐧𝐝?
-📌 𝐓𝐫𝐲:
+━━━━━━━━━━━━━━━━━━
+📌 𝐓𝐫𝐲 𝐭𝐡𝐞𝐬𝐞:
 /all - 𝐒𝐡𝐨𝐰 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
-/emojify (name) 𝐭𝐞𝐱𝐭 - 𝐂𝐨𝐧𝐯𝐞𝐫𝐭 𝐭𝐨 𝐩𝐫𝐞𝐦𝐢𝐮𝐦
-💡 𝐄𝐱𝐚𝐦𝐩𝐥𝐞:
-/emojify (verified) 𝐡𝐞𝐥𝐥𝐨
+/emojify (name) 𝐭𝐞𝐱𝐭 - 𝐂𝐨𝐧𝐯𝐞𝐫𝐭
+━━━━━━━━━━━━━━━━━━
+💡 /emojify (verified) 𝐡𝐞𝐥𝐥𝐨
 ━━━━━━━━━━━━━━━━━━
 👑 @iflexbluddy
 """
@@ -554,13 +623,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ============ MAIN ============
 def main():
     try:
-        # Start Flask server in background
+        # Start Flask server for Render
         threading.Thread(target=run_flask, daemon=True).start()
         
         # Create application
         application = Application.builder().token(BOT_TOKEN).build()
         
-        # Add handlers
+        # Add command handlers
         application.add_handler(CommandHandler("start", start_command))
         application.add_handler(CommandHandler("help", help_command))
         application.add_handler(CommandHandler("all", all_command))
@@ -573,15 +642,15 @@ def main():
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
         
         print("=" * 50)
-        print("✨ PREMIUM EMOJI BOT STARTED")
-        print(f"👑 Owner: {OWNER_ID}")
+        print("✨ PREMIUM EMOJI BOT STARTED ✨")
+        print(f"👑 Owner ID: {OWNER_ID}")
         print(f"📋 Admins: {ADMIN_IDS}")
         print(f"📦 Total Emojis: {len(PREMIUM_EMOJIS)}")
         print("✅ Bot is ready to receive messages!")
         print("👑 Developer: @iflexbluddy")
         print("=" * 50)
         
-        # Start the bot
+        # Start polling
         application.run_polling(allowed_updates=Update.ALL_TYPES)
         
     except Exception as e:

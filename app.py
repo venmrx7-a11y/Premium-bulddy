@@ -30,18 +30,25 @@ BANNED_FILE = "banned.json"
 
 # ============ ALL PREMIUM EMOJIS (COMPLETE LIST) ============
 PREMIUM_EMOJIS = {
+    # === CHECK MARKS / VERIFICATION ===
     "verified": {"id": "6246537187614005254", "fallback": "✅"},
     "verify": {"id": "6246782404476803545", "fallback": "✅"},
     "verify_blue": {"id": "6010060634803148161", "fallback": "✅"},
     "verify_purple": {"id": "6010498532488778300", "fallback": "✅"},
+    
+    # === EYES / VISION ===
     "eye": {"id": "6035338338406242050", "fallback": "👁️"},
     "eyeball": {"id": "6035051267087143217", "fallback": "👁️"},
     "eyes": {"id": "6035225389356290238", "fallback": "👀"},
     "eyes_blue": {"id": "6035081585261287115", "fallback": "👀"},
+    
+    # === FIRE / HOT / TRENDING ===
     "fire": {"id": "4956222745814762495", "fallback": "🔥"},
     "fire_red": {"id": "4956606007221421405", "fallback": "🔥"},
     "fire_orange": {"id": "4956429969396859866", "fallback": "🔥"},
     "explosion": {"id": "6032673796530377389", "fallback": "💥"},
+    
+    # === HEARTS / LOVE ===
     "heart": {"id": "5783157259152397008", "fallback": "❤️"},
     "heart_red": {"id": "5801084710343938087", "fallback": "❤️"},
     "heart_pink": {"id": "6010280773351904888", "fallback": "❤️"},
@@ -51,27 +58,39 @@ PREMIUM_EMOJIS = {
     "heart_orange": {"id": "5840263144212529797", "fallback": "🧡"},
     "heart_purple": {"id": "5840265018655703965", "fallback": "💜"},
     "heart_black": {"id": "5840266939932994956", "fallback": "🖤"},
+    
+    # === STARS / RATING ===
     "star": {"id": "6244496562752331516", "fallback": "⭐"},
     "star_gold": {"id": "5904618938578243567", "fallback": "⭐"},
     "star_blue": {"id": "6010193314932855525", "fallback": "⭐"},
     "star_glow": {"id": "6010156854955480259", "fallback": "🌟"},
     "sparkle": {"id": "6010338729640596556", "fallback": "✨"},
     "sparkle_blue": {"id": "6010086134023985536", "fallback": "✨"},
+    
+    # === VAMPIRE / MONSTER ===
     "vampire": {"id": "6034871295072539452", "fallback": "🧛"},
     "monster": {"id": "6034962795055812935", "fallback": "👹"},
     "ghost": {"id": "6035070298087231243", "fallback": "👻"},
     "devil": {"id": "6035242444671421879", "fallback": "👿"},
     "demon": {"id": "6035136809950778133", "fallback": "😈"},
+    
+    # === CROWN / KING ===
     "crown": {"id": "5794422335599546668", "fallback": "👑"},
     "crown_gold": {"id": "6089003761496232797", "fallback": "👑"},
     "crown_blue": {"id": "6247039939305808563", "fallback": "👑"},
+    
+    # === MONEY / WEALTH ===
     "money": {"id": "6089104607328342288", "fallback": "💰"},
     "money_bag": {"id": "6086730718774300509", "fallback": "💰"},
     "dollar": {"id": "6089140105233044310", "fallback": "💵"},
     "diamond": {"id": "6086778246882399112", "fallback": "💎"},
+    
+    # === THUMBS ===
     "like": {"id": "6089313931149448495", "fallback": "👍"},
     "unlike": {"id": "6088789257285988672", "fallback": "👎"},
     "clap": {"id": "6093744967304352336", "fallback": "👏"},
+    
+    # === SMILEYS ===
     "smile": {"id": "6093864814071780526", "fallback": "😀"},
     "big_smile": {"id": "6093922327978840798", "fallback": "😀"},
     "laugh": {"id": "5782741660936966676", "fallback": "😂"},
@@ -84,6 +103,8 @@ PREMIUM_EMOJIS = {
     "cry": {"id": "5783024321324651865", "fallback": "😭"},
     "angry": {"id": "6035355642829475999", "fallback": "😡"},
     "think": {"id": "5782756916660802905", "fallback": "🤔"},
+    
+    # === FLAGS ===
     "flag_us": {"id": "5433865586356531140", "fallback": "🇺🇸"},
     "flag_gb": {"id": "5433827537241258614", "fallback": "🇬🇧"},
     "flag_fr": {"id": "5433636707549331311", "fallback": "🇫🇷"},
@@ -103,6 +124,8 @@ PREMIUM_EMOJIS = {
     "flag_pk": {"id": "5434064563601421981", "fallback": "🇵🇰"},
     "flag_bd": {"id": "5433854239052935880", "fallback": "🇧🇩"},
     "flag_ng": {"id": "5433982207603520017", "fallback": "🇳🇬"},
+    
+    # === EXTRA EMOJIS ===
     "flex": {"id": "6147464060305676048", "fallback": "😎"},
     "blue_verification": {"id": "6147524086768604985", "fallback": "💎"},
     "frozen": {"id": "5449449325434266744", "fallback": "❄️"},
@@ -131,13 +154,23 @@ PREMIUM_EMOJIS = {
     "stars_emoji": {"id": "6235403472741603087", "fallback": "⭐"},
     "github_emoji": {"id": "5346181118884331907", "fallback": "📱"},
     "motion_emoji": {"id": "5971944878815317190", "fallback": "💠"},
+    
+    # === BOLT / LIGHTNING ===
     "bolt": {"id": "5791970059597386804", "fallback": "⚡"},
     "zap": {"id": "6087079590377820415", "fallback": "⚡"},
+    
+    # === LOVE / KISS ===
     "kiss_heart": {"id": "6044369013952222465", "fallback": "🥰"},
     "cute": {"id": "6044359320211034681", "fallback": "🥰"},
+    
+    # === ANGRY / MAD ===
     "mad": {"id": "6034865170449175739", "fallback": "😤"},
     "angry_face": {"id": "6034855438053282213", "fallback": "😤"},
+    
+    # === THINKING ===
     "thinking": {"id": "5783034045130610245", "fallback": "🤔"},
+    
+    # === PRIMARY EMOJIS (from Reobashd pack) ===
     "primary1": {"id": "6034945975963881533", "fallback": "👁️"},
     "primary2": {"id": "6034845323405299835", "fallback": "👁️"},
     "primary3": {"id": "6035169816774446606", "fallback": "👁️"},
@@ -148,9 +181,13 @@ PREMIUM_EMOJIS = {
     "primary8": {"id": "6035067476293718178", "fallback": "👁️"},
     "primary9": {"id": "6033130342964007608", "fallback": "👁️"},
     "primary10": {"id": "6035179291472302298", "fallback": "👁️"},
+    
+    # === EXTRA SMILEYS ===
     "grin": {"id": "5782942227319756256", "fallback": "😄"},
     "sweat_smile": {"id": "5782670102486848559", "fallback": "😅"},
     "blush": {"id": "5780690182692935276", "fallback": "😊"},
+    
+    # === EXTRA FLAGS ===
     "flag_ae": {"id": "5434013938821902926", "fallback": "🇦🇪"},
     "flag_sa": {"id": "5433991338703991663", "fallback": "🇸🇦"},
     "flag_za": {"id": "5431489619038320862", "fallback": "🇿🇦"},
@@ -256,19 +293,28 @@ def is_banned(user_id):
 
 # ============ /ALL COMMAND ============
 async def all_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Show all premium emojis with their names"""
     user_id = update.effective_user.id
+    
     if is_banned(user_id):
         await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
         return
+    
     register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name)
+    
     emoji_list = []
     for name, data in PREMIUM_EMOJIS.items():
         emoji_html = get_emoji_html(name)
         emoji_list.append(f"{emoji_html} {name}")
+    
+    # Split into chunks of 30
     chunks = [emoji_list[i:i+30] for i in range(0, len(emoji_list), 30)]
+    
     for idx, chunk in enumerate(chunks):
         content = f"𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐄𝐌𝐎𝐉𝐈𝐒 ({len(PREMIUM_EMOJIS)}) - 𝐏𝐚𝐠𝐞 {idx+1}/{len(chunks)}\n━━━━━━━━━━━━━━━━━━\n\n" + "\n".join(chunk) + "\n\n━━━━━━━━━━━━━━━━━━\n💡 /emojify (name) 𝐭𝐞𝐱𝐭"
+        
         formatted = format_with_double_emojis(content)
+        
         if idx == 0:
             await update.message.reply_text(formatted, parse_mode="HTML")
         else:
@@ -276,11 +322,15 @@ async def all_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # ============ /EMOJIFY COMMAND ============
 async def emojify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Convert text with (emoji_name) to premium emojis"""
     user_id = update.effective_user.id
+    
     if is_banned(user_id):
         await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
         return
+    
     register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name)
+    
     if not context.args:
         await update.message.reply_text(
             "📝 𝐔𝐬𝐚𝐠𝐞: `/emojify (emoji_name) 𝐲𝐨𝐮𝐫 𝐭𝐞𝐱𝐭`\n\n"
@@ -289,28 +339,38 @@ async def emojify_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode="Markdown"
         )
         return
+    
     full_text = " ".join(context.args)
+    
     def replace_emoji(match):
         emoji_name = match.group(1).lower().strip()
         emoji_html = get_emoji_by_name(emoji_name)
         if emoji_html:
             return emoji_html
         return match.group(0)
+    
     result = re.sub(r'\(([^)]+)\)', replace_emoji, full_text)
+    
     if not result.strip():
         await update.message.reply_text("❌ 𝐍𝐨 𝐯𝐚𝐥𝐢𝐝 𝐞𝐦𝐨𝐣𝐢 𝐟𝐨𝐮𝐧𝐝! 𝐔𝐬𝐞 /all")
         return
+    
+    # Convert to stylish text
     stylish_result = to_fancy(result)
     formatted = format_with_double_emojis(stylish_result)
+    
     await update.message.reply_text(formatted, parse_mode="HTML")
 
 # ============ OWNER PANEL COMMANDS ============
 async def owner_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Owner panel - /owner"""
     if not is_owner(update.effective_user.id):
         await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
         return
+    
     total_users = len(users)
     banned_count = len(banned)
+    
     content = f"""
 👑 𝐎𝐖𝐍𝐄𝐑 𝐏𝐀𝐍𝐄𝐋 👑
 ━━━━━━━━━━━━━━━━━━
@@ -319,6 +379,7 @@ async def owner_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 🚫 𝐁𝐚𝐧𝐧𝐞𝐝: {banned_count}
 ✅ 𝐀𝐜𝐭𝐢𝐯𝐞: {total_users - banned_count}
 📦 𝐓𝐨𝐭𝐚𝐥 𝐄𝐦𝐨𝐣𝐢𝐬: {len(PREMIUM_EMOJIS)}
+
 ━━━━━━━━━━━━━━━━━━
 👑 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒
 📋 /users - 𝐋𝐢𝐬𝐭 𝐚𝐥𝐥 𝐮𝐬𝐞𝐫𝐬
@@ -327,43 +388,53 @@ async def owner_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 📊 /stats - 𝐁𝐨𝐭 𝐬𝐭𝐚𝐭𝐬
 📋 /all - 𝐒𝐡𝐨𝐰 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
 ━━━━━━━━━━━━━━━━━━
-👑 @iflexbluddy
+👑 @iflexvenom
 """
     formatted = format_with_double_emojis(content)
     await update.message.reply_text(formatted, parse_mode="HTML")
 
 async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """List all users with usernames - /users"""
     if not is_owner(update.effective_user.id):
         await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
         return
+    
     if not users:
         await update.message.reply_text("📭 𝐍𝐨 𝐮𝐬𝐞𝐫𝐬 𝐟𝐨𝐮𝐧𝐝.")
         return
+    
     msg = "👥 𝐔𝐒𝐄𝐑𝐒 𝐋𝐈𝐒𝐓 👥\n━━━━━━━━━━━━━━━━━━\n\n"
     for uid, u in users.items():
         status = "🚫 𝐁𝐀𝐍𝐍𝐄𝐃" if uid in banned else "✅ 𝐀𝐂𝐓𝐈𝐕𝐄"
         username = u.get('username', '𝐍𝐨𝐧𝐞')
         msg += f"🆔 {uid}\n📛 @{username}\n📌 {status}\n\n"
+    
     formatted = format_with_double_emojis(msg)
+    
     if len(formatted) > 4000:
         await update.message.reply_text(f"📊 𝐓𝐨𝐭𝐚𝐥 𝐮𝐬𝐞𝐫𝐬: {len(users)}")
     else:
         await update.message.reply_text(formatted, parse_mode="HTML")
 
 async def ban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Ban user - /ban USER_ID"""
     if not is_owner(update.effective_user.id):
         await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
         return
+    
     if len(context.args) < 1:
         await update.message.reply_text("📝 𝐔𝐬𝐚𝐠𝐞: `/ban 𝐔𝐒𝐄𝐑_𝐈𝐃`", parse_mode="Markdown")
         return
+    
     user_id = context.args[0]
     if user_id not in users:
         await update.message.reply_text(f"❌ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐧𝐨𝐭 𝐟𝐨𝐮𝐧𝐝!", parse_mode="Markdown")
         return
+    
     if user_id == str(OWNER_ID):
         await update.message.reply_text("❌ 𝐂𝐚𝐧𝐧𝐨𝐭 𝐛𝐚𝐧 𝐭𝐡𝐞 𝐨𝐰𝐧𝐞𝐫!")
         return
+    
     if user_id not in banned:
         banned.append(user_id)
         save_banned(banned)
@@ -372,12 +443,15 @@ async def ban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"⚠️ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐢𝐬 𝐚𝐥𝐫𝐞𝐚𝐝𝐲 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
 
 async def unban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Unban user - /unban USER_ID"""
     if not is_owner(update.effective_user.id):
         await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
         return
+    
     if len(context.args) < 1:
         await update.message.reply_text("📝 𝐔𝐬𝐚𝐠𝐞: `/unban 𝐔𝐒𝐄𝐑_𝐈𝐃`", parse_mode="Markdown")
         return
+    
     user_id = context.args[0]
     if user_id in banned:
         banned.remove(user_id)
@@ -387,11 +461,14 @@ async def unban_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"⚠️ 𝐔𝐬𝐞𝐫 `{user_id}` 𝐢𝐬 𝐧𝐨𝐭 𝐛𝐚𝐧𝐧𝐞𝐝!", parse_mode="Markdown")
 
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Bot stats - /stats"""
     if not is_owner(update.effective_user.id):
         await update.message.reply_text("❌ 𝐎𝐰𝐧𝐞𝐫 𝐨𝐧𝐥𝐲!")
         return
+    
     total_users = len(users)
     banned_count = len(banned)
+    
     content = f"""
 📊 𝐁𝐎𝐓 𝐒𝐓𝐀𝐓𝐈𝐒𝐓𝐈𝐂𝐒 📊
 ━━━━━━━━━━━━━━━━━━
@@ -400,7 +477,7 @@ async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 ✅ 𝐀𝐜𝐭𝐢𝐯𝐞: {total_users - banned_count}
 📦 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐄𝐦𝐨𝐣𝐢𝐬: {len(PREMIUM_EMOJIS)}
 ━━━━━━━━━━━━━━━━━━
-👑 @iflexbluddy
+👑 @iflexvenom
 """
     formatted = format_with_double_emojis(content)
     await update.message.reply_text(formatted, parse_mode="HTML")
@@ -411,55 +488,70 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = user.id
     first_name = user.first_name
     username = user.username or "NoUsername"
+    
     if is_banned(user_id):
         await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
         return
+    
     register_user(user_id, username, first_name)
+    
     fancy_name = to_fancy(first_name)
+    
     content = f"""
 ✨ 𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐓𝐎 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐄𝐌𝐎𝐉𝐈 𝐁𝐎𝐓 ✨
 ━━━━━━━━━━━━━━━━━━
+
 👋 𝐇𝐞𝐲 {fancy_name}! 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐚𝐛𝐨𝐚𝐫𝐝!
+
 🔹 𝐂𝐨𝐧𝐯𝐞𝐫𝐭 𝐚𝐧𝐲 𝐞𝐦𝐨𝐣𝐢 𝐭𝐨 𝐩𝐫𝐞𝐦𝐢𝐮𝐦
 🔹 𝐒𝐮𝐩𝐩𝐨𝐫𝐭𝐬 𝐚𝐥𝐥 𝐟𝐨𝐫𝐦𝐚𝐭𝐭𝐢𝐧𝐠
 🔹 𝟏𝟎𝟎+ 𝐩𝐫𝐞𝐦𝐢𝐮𝐦 𝐞𝐦𝐨𝐣𝐢𝐬
+
 ━━━━━━━━━━━━━━━━━━
 📌 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒
 📋 /all - 𝐒𝐡𝐨𝐰 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
 ✨ /emojify (name) 𝐭𝐞𝐱𝐭 - 𝐂𝐨𝐧𝐯𝐞𝐫𝐭 𝐭𝐨 𝐩𝐫𝐞𝐦𝐢𝐮𝐦
 ❓ /help - 𝐇𝐞𝐥𝐩 𝐦𝐞𝐧𝐮
+
 ━━━━━━━━━━━━━━━━━━
 💡 𝐄𝐗𝐀𝐌𝐏𝐋𝐄
 /emojify (verified) 𝐡𝐞𝐥𝐥𝐨 𝐰𝐨𝐫𝐥𝐝 (don)
+
 ━━━━━━━━━━━━━━━━━━
-👑 @iflexbluddy
+👑 @iflexvenom
 """
     formatted = format_with_double_emojis(content)
     await update.message.reply_text(formatted, parse_mode="HTML")
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
+    
     if is_banned(user_id):
         await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
         return
+    
     content = f"""
 ❓ 𝐇𝐄𝐋𝐏 𝐆𝐔𝐈𝐃𝐄 ❓
 ━━━━━━━━━━━━━━━━━━
+
 📌 𝐇𝐎𝐖 𝐓𝐎 𝐔𝐒𝐄
 1️⃣ 𝐓𝐲𝐩𝐞 `/all` 𝐭𝐨 𝐬𝐞𝐞 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
 2️⃣ 𝐔𝐬𝐞 `/emojify (name) 𝐲𝐨𝐮𝐫 𝐭𝐞𝐱𝐭`
 3️⃣ 𝐄𝐦𝐨𝐣𝐢 𝐰𝐢𝐥𝐥 𝐛𝐞 𝐚𝐩𝐩𝐥𝐢𝐞𝐝!
+
 ━━━━━━━━━━━━━━━━━━
 📝 𝐄𝐗𝐀𝐌𝐏𝐋𝐄𝐒
 /emojify (verified) 𝐡𝐞𝐥𝐥𝐨
 /emojify (fire) (heart) 𝐈'𝐦 𝐭𝐡𝐞 𝐛𝐞𝐬𝐭
+
 ━━━━━━━━━━━━━━━━━━
 📋 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒
 /all - 𝐀𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
 /emojify - 𝐂𝐨𝐧𝐯𝐞𝐫𝐭 𝐭𝐞𝐱𝐭
 /help - 𝐓𝐡𝐢𝐬 𝐦𝐞𝐧𝐮
+
 ━━━━━━━━━━━━━━━━━━
-👑 @iflexbluddy
+👑 @iflexvenom
 """
     formatted = format_with_double_emojis(content)
     await update.message.reply_text(formatted, parse_mode="HTML")
@@ -467,21 +559,30 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ============ MESSAGE HANDLER ============
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
+    
     if is_banned(user_id):
         await update.message.reply_text("❌ 𝐘𝐨𝐮 𝐚𝐫𝐞 𝐛𝐚𝐧𝐧𝐞𝐝!")
         return
+    
+    # Ignore commands
     if update.message.text and update.message.text.startswith('/'):
         return
+    
+    # If user sends any text, show help
     register_user(user_id, update.effective_user.username or "NoUsername", update.effective_user.first_name)
+    
     content = f"""
 💡 𝐃𝐢𝐝 𝐲𝐨𝐮 𝐦𝐞𝐚𝐧 𝐭𝐨 𝐮𝐬𝐞 𝐚 𝐜𝐨𝐦𝐦𝐚𝐧𝐝?
+
 📌 𝐓𝐫𝐲:
 /all - 𝐒𝐡𝐨𝐰 𝐚𝐥𝐥 𝐞𝐦𝐨𝐣𝐢𝐬
 /emojify (name) 𝐭𝐞𝐱𝐭 - 𝐂𝐨𝐧𝐯𝐞𝐫𝐭 𝐭𝐨 𝐩𝐫𝐞𝐦𝐢𝐮𝐦
+
 💡 𝐄𝐱𝐚𝐦𝐩𝐥𝐞:
 /emojify (verified) 𝐡𝐞𝐥𝐥𝐨
+
 ━━━━━━━━━━━━━━━━━━
-👑 @iflexbluddy
+👑 @iflexvenom
 """
     formatted = format_with_double_emojis(content)
     await update.message.reply_text(formatted, parse_mode="HTML")
@@ -492,15 +593,20 @@ def main():
     
     application = Application.builder().token(BOT_TOKEN).build()
     
+    # User commands
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("all", all_command))
     application.add_handler(CommandHandler("emojify", emojify_command))
+    
+    # Owner commands
     application.add_handler(CommandHandler("owner", owner_panel))
     application.add_handler(CommandHandler("users", list_users))
     application.add_handler(CommandHandler("ban", ban_user))
     application.add_handler(CommandHandler("unban", unban_user))
     application.add_handler(CommandHandler("stats", stats_command))
+    
+    # Message handler
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     
     print("=" * 50)
@@ -511,7 +617,6 @@ def main():
     print("✅ All emojis are premium only")
     print("✅ /all shows all emojis with names")
     print("✅ /emojify converts text with premium emojis")
-    print("👑 Developer: @iflexbluddy")
     print("=" * 50)
     
     application.run_polling()

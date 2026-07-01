@@ -21,8 +21,8 @@ def run_flask():
     flask_app.run(host='0.0.0.0', port=port)
 
 # ============ CONFIG ============
-BOT_TOKEN = "8996457447:AAFZ9TmsRU5CWyjsE57zbonTz2NUxyA3AyQ"
-OWNER_ID = 8471373583
+BOT_TOKEN = "8903487173:AAEyFfYzY8Sq_5qq4ArVaOWU0TY9AsnndXs"
+OWNER_ID = 8586849798
 ADMIN_IDS = [OWNER_ID, 8986441675]
 
 USERS_FILE = "users.json"
